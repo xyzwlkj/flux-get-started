@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default
+data:
+  application.yaml: |
+    server:
+      port: 8080
+      servlet:
+        encoding:
+          charset: UTF-8
+          force: true
+          enabled: true
+
+    spring:
+      profiles:
+        active: dev
+      datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://mysql:3306/purchasing?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+        username: root
+        password: root
+      redis:
+        host: redis
+        port: 6379
+      security:
+        filter:
+          order: 20
+      jackson:
+        default-property-inclusion: non_null
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+        parser:
+          allow-unquoted-field-names: true
+          allow-single-quotes: true
+          allow-unquoted-control-chars: true
+
+    mybatis-plus:
+      configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+      mapper-locations: classpath:/mapper/*.xml
+    jwt:
+      ttl: 720000
+      secret: Ma4pc48a7nShvqkNIhzhT9IuvywE1oZi
+      expires-in: 2592000

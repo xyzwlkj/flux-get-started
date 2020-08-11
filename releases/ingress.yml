@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: api-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: api.io
+      http:
+        paths:
+          - path: /auth
+            pathType: Prefix
+            backend:
+              serviceName: auth
+              servicePort: 80
+          - path: /order
+            pathType: Prefix
+            backend:
+              serviceName: order
+              servicePort: 80
+          - path: /product
+            pathType: Prefix
+            backend:
+              serviceName: product
+              servicePort: 80
+          - path: /supplier
+            pathType: Prefix
+            backend:
+              serviceName: supplier
+              servicePort: 80

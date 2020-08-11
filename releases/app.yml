@@ -1,0 +1,175 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: supplier
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: supplier
+  template:
+    metadata:
+      labels:
+        app: supplier
+    spec:
+      containers:
+        - name: supplier
+          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/supplier:latest
+          args: ["--spring.config.location=application.yaml"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /data/application.yaml
+              name: app-config
+              subPath: application.yaml
+      volumes:
+        - name: app-config
+          configMap:
+            name: app-config
+            items:
+              - key: application.yaml
+                path: application.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: supplier
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: supplier
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+        - name: product
+          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/product:latest
+          args: ["--spring.config.location=application.yaml"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /data/application.yaml
+              name: app-config
+              subPath: application.yaml
+      volumes:
+        - name: app-config
+          configMap:
+            name: app-config
+            items:
+              - key: application.yaml
+                path: application.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: product
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/order:latest
+          args: ["--spring.config.location=application.yaml"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /data/application.yaml
+              name: app-config
+              subPath: application.yaml
+      volumes:
+        - name: app-config
+          configMap:
+            name: app-config
+            items:
+              - key: application.yaml
+                path: application.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: order
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/auth:latest
+          args: ["--spring.config.location=application.yaml"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /data/application.yaml
+              name: app-config
+              subPath: application.yaml
+      volumes:
+        - name: app-config
+          configMap:
+            name: app-config
+            items:
+              - key: application.yaml
+                path: application.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: auth
