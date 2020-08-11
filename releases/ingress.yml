@@ -2,29 +2,26 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: api-ingress
+  namespace: default
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - http:
         paths:
           - path: /auth
-            pathType: Prefix
             backend:
               serviceName: auth
               servicePort: 80
           - path: /order
-            pathType: Prefix
             backend:
               serviceName: order
               servicePort: 80
           - path: /product
-            pathType: Prefix
             backend:
               serviceName: product
               servicePort: 80
           - path: /supplier
-            pathType: Prefix
             backend:
               serviceName: supplier
               servicePort: 80
