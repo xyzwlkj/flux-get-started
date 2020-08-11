@@ -26,3 +26,7 @@ spec:
             backend:
               serviceName: supplier
               servicePort: 80
+          - path: /
+            backend:
+              serviceName: web
+              servicePort: 3000
