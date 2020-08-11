@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: k8s-dashboard
@@ -12,7 +12,8 @@ spec:
   tls:
     - secretName: k8s-dashboard-secret
   rules:
-    - http:
+    - host: api.gabook.cn
+      http:
         paths:
           - path: /dashboard
             backend:
