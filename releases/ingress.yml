@@ -6,8 +6,7 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: api.io
-      http:
+    - http:
         paths:
           - path: /auth
             pathType: Prefix
