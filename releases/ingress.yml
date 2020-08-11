@@ -25,8 +25,12 @@ spec:
           - path: /supplier
             backend:
               serviceName: supplier
-              servicePort: 80
+              servicePort: 8
+    - host: web.gabook.cn
+      http:
+        paths:
           - path: /
             backend:
               serviceName: web
               servicePort: 3000
+
