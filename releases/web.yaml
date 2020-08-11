@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/web:1.0.1
+          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/web:1.0.2
           ports:
             - containerPort: 3000
 ---
