@@ -189,7 +189,7 @@ spec:
         app: category
     spec:
       containers:
-        - name: order
+        - name: category
           image: registry.cn-shenzhen.aliyuncs.com/kube-dev/category:latest
           args: ["--spring.config.location=application.yaml"]
           ports:
