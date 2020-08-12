@@ -173,3 +173,47 @@ spec:
       protocol: TCP
   selector:
     app: auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: category
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: category
+  template:
+    metadata:
+      labels:
+        app: category
+    spec:
+      containers:
+        - name: order
+          image: registry.cn-shenzhen.aliyuncs.com/kube-dev/category:latest
+          args: ["--spring.config.location=application.yaml"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /data/application.yaml
+              name: app-config
+              subPath: application.yaml
+      volumes:
+        - name: app-config
+          configMap:
+            name: app-config
+            items:
+              - key: application.yaml
+                path: application.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: category
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: category
